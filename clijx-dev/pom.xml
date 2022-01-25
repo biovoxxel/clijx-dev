@@ -1,0 +1,144 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>de.biovoxxel</groupId>
+	<artifactId>clijx-dev</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<parent>
+		<groupId>net.haesleinhuepf</groupId>
+		<artifactId>clij-parent-pom</artifactId>
+		<version>2.5.1.4</version>
+		<relativePath />
+	</parent>
+
+
+	<name>clijx-dev</name>
+	<description>clijx plugin and functionality development</description>
+	<inceptionYear>2022</inceptionYear>
+	<organization>
+		<name>BioVoxxel</name>
+		<url>https://www.biovoxxel.de</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<id>haesleinhuepf</id>
+			<name>Robert Haase</name>
+			<url>http://haesleinhuepf.net</url>
+			<organization>MPI CBG</organization>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
+	<contributors>
+		<contributor>
+			<name>Peter Haub</name>
+			<properties><id>iwbh15</id></properties>
+		</contributor>
+		<contributor>
+			<name>Ruth Whelan-Jeans</name>
+			<properties><id>ruthwj</id></properties>
+		</contributor>
+		<contributor>
+			<name>Matthias Arzt</name>
+			<properties><id>maarzt</id></properties>
+		</contributor>
+		<contributor>
+			<name>Jan Brocher</name>
+			<properties><id>biovoxxel</id></properties>
+		</contributor>
+	</contributors>
+
+
+
+	<mailingLists>
+		<mailingList>
+			<name>ImageSc Forum</name>
+			<archive>http://forum.image.sc/</archive>
+		</mailingList>
+	</mailingLists>
+
+	<scm>
+		<connection>scm:git:git://github.com/biovoxxel/clijx-dev</connection>
+        <developerConnection>scm:git:git@github.com/biovoxxel/clijx-dev</developerConnection>
+        <tag>HEAD</tag>
+		<url>https://github.com/biovoxxel/clijx-dev</url>
+	</scm>
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/biovoxxel/clijx-dev/issues</url>
+	</issueManagement>
+
+	<ciManagement>
+		<system>None</system>
+	</ciManagement>
+
+	<properties>
+		<package-name>de.biovoxxel</package-name>
+		<license.licenseName>bsd_3</license.licenseName>
+		<license.copyrightOwners>Jan Brocher, BioVoxxel</license.copyrightOwners>
+		<!--<scijava.app.directory>/home/rhaase/programs/fiji/Fiji.app/</scijava.app.directory>-->
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>net.haesleinhuepf</groupId>
+			<artifactId>clij_</artifactId>
+     	</dependency>
+		<dependency>
+			<groupId>net.haesleinhuepf</groupId>
+			<artifactId>clij-clearcl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.haesleinhuepf</groupId>
+			<artifactId>clij2_</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.haesleinhuepf</groupId>
+			<artifactId>clijx-weka_</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.github.sarxos</groupId>
+			<artifactId>webcam-capture</artifactId>
+			<version>0.3.12</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>scijava.public</id>
+			<url>https://maven.scijava.org/content/groups/public</url>
+		</repository>
+	</repositories>
+
+	<build>
+		<plugins>
+			<!--<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<argLine>-Xmx2G</argLine>
+				</configuration>
+			</plugin>-->
+
+	
+	    <plugin>
+	      <groupId>org.apache.maven.plugins</groupId>
+	      <artifactId>maven-jar-plugin</artifactId>
+	      <configuration>
+	        <outputDirectory>C:\Users\broch\Desktop\Fiji.app BVTB 3.0\plugins</outputDirectory>
+	      </configuration>
+	    </plugin>
+	  
+
+		</plugins>
+	</build>
+
+</project>
