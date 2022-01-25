@@ -49,6 +49,23 @@ public class PushGridTile extends AbstractCLIJ2Plugin implements CLIJMacroPlugin
 		return true;
 	}
 
+	public static void main(String[] args) {
+		String test_image = "0 1 0 1\n1 0 1 0";
+		CLIJ2 clij2 = CLIJ2.getInstance();
+
+		ClearCLBuffer test = clij2.pushString(test_image);
+		ImagePlus imp = clij2.pull(test);
+
+		// Test starts here
+		ClearCLBuffer tile = pushGridTile(clij2, imp, 2, 2, 1, 0, 0, 0, 0f);
+		System.out.println(tile);
+
+		clij2.print(tile);
+
+
+
+	}
+
 	
 	public static ClearCLBuffer pushGridTile(CLIJ2 clij2, ImagePlus imp, Integer tileCountX, Integer tileCountY, Integer tileCountZ, Integer tileX, Integer tileY, Integer tileZ, Float percentageOverlap) {
 		
