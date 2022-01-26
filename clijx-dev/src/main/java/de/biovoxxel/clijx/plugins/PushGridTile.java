@@ -3,6 +3,7 @@ package de.biovoxxel.clijx.plugins;
 
 import org.scijava.plugin.Plugin;
 
+import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
 import ij.WindowManager;
@@ -25,6 +26,27 @@ import net.haesleinhuepf.clij2.utilities.HasAuthor;
 @Plugin(type = CLIJMacroPlugin.class, name = "CLIJ2_pushGridTile")
 public class PushGridTile extends AbstractCLIJ2Plugin implements CLIJMacroPlugin, CLIJOpenCLProcessor, OffersDocumentation, HasAuthor {
 
+	//Test plugin
+	public static void main(String[] args) {
+	
+		IJ.run("Boats");
+		ImagePlus test_image = WindowManager.getCurrentImage();
+		CLIJ2 clij2 = CLIJ2.getInstance();
+
+		ClearCLBuffer test = clij2.push(test_image);
+		ImagePlus imp = clij2.pull(test);
+		imp.show();
+
+		// Test starts here
+		ClearCLBuffer tile = pushGridTile(clij2, imp, 4, 2, 1, 1, 1, 0, 40f);
+		System.out.println(tile);
+
+		clij2.print(tile);
+		ImagePlus tileImp = clij2.pull(tile);
+		tileImp.show();
+	}	
+	
+	
 	public boolean executeCL() {
 		
 		String imageName = (String) args[0];
