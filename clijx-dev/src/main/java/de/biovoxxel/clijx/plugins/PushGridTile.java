@@ -131,20 +131,20 @@ public class PushGridTile extends AbstractCLIJ2Plugin implements CLIJMacroPlugin
 		ImagePlus tileImagePlus = new ImagePlus("current_tile", tileStack);
 		
 		ClearCLBuffer buffer = clij2.push(tileImagePlus);
-
-//		System.out.println("---> Processing tile = " + tileX + " / " + tileY + " / " + tileZ);
-//		System.out.println("Working on image = " + imp);
-//		System.out.println("tileWidth * overlapFactor = " + baseTileWidth * overlapFactor);
-//		System.out.println("x_overlap = " + x_overlap);
-//		System.out.println("tileHeight * overlapFactor = " + baseTileHeight * overlapFactor);
-//		System.out.println("y_overlap = " + y_overlap);
-//		System.out.println("tileDepth * overlapFactor = " + baseTileDepth * overlapFactor);
-//		System.out.println("z_overlap = " + z_overlap);
-//		System.out.println("xLoc = " + xLoc);
-//		System.out.println("yLoc = " + yLoc);
-//		System.out.println("zLoc = " + zLoc);
-//		System.out.println("Pushing " + tileImagePlus + " to GPU");
-//		System.out.println(buffer);
+		
+		System.out.println("---> Processing tile = " + tileX + " / " + tileY + " / " + tileZ);
+		System.out.println("Working on image = " + imp);
+		System.out.println("tileWidth * overlapFactor = " + baseTileWidth * overlapFactor);
+		System.out.println("x_overlap = " + x_overlap);
+		System.out.println("tileHeight * overlapFactor = " + baseTileHeight * overlapFactor);
+		System.out.println("y_overlap = " + y_overlap);
+		System.out.println("tileDepth * overlapFactor = " + baseTileDepth * overlapFactor);
+		System.out.println("z_overlap = " + z_overlap);
+		System.out.println("xLoc = " + xLoc);
+		System.out.println("yLoc = " + yLoc);
+		System.out.println("zLoc = " + zLoc);
+		System.out.println("Pushing " + tileImagePlus + " to GPU");
+		System.out.println(buffer);
 		
 		return buffer;
 	}
@@ -156,7 +156,7 @@ public class PushGridTile extends AbstractCLIJ2Plugin implements CLIJMacroPlugin
 		if (tilePositionID == gridTileCount-1) {
 			tileSize = (int) Math.floor(imageSize - (Math.floor(tileSize * nonOverlapFactor) * (gridTileCount - 1)));
 		}
-		System.out.println("tileSize = " + tileSize);
+		//System.out.println("tileSize = " + tileSize);
 		return tileSize;
 	}
 	

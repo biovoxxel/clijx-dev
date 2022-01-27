@@ -22,7 +22,6 @@ import net.haesleinhuepf.clij2.plugins.ConnectedComponentsLabelingDiamond;
 import net.haesleinhuepf.clij2.plugins.ExcludeLabelsOnEdges;
 import net.haesleinhuepf.clij2.plugins.ExtendLabelingViaVoronoi;
 import net.haesleinhuepf.clij2.plugins.Mask;
-import net.haesleinhuepf.clij2.plugins.VoronoiLabeling;
 import net.haesleinhuepf.clij2.utilities.HasAuthor;
 
 /**
@@ -64,14 +63,14 @@ public class PullGridTileToImage  extends AbstractCLIJ2Plugin implements CLIJMac
 
 	/**
 	 * 
-	 * @param clij2 CLIJ2 instance
-	 * @param gridTile ClearCLBuffer instance holding the grid tile image on GPU
-	 * @param imp the destination ImagePlus 
-	 * @param tileX Tile identifier in x direction (0....n)
-	 * @param tileY Tile identifier in y direction (0....n)
-	 * @param tileZ Tile (stack-block) identifier in z direction (0....n)
-	 * @param percentageOverlap Tile overlap in percent (0 - 100)
-	 * @param fusionMode The {@link ij.process.Blitter} interface can be used to specify the fusionMode input such as <i>Blitter.COPY</i>
+	 * @param clij2 - CLIJ2 instance
+	 * @param gridTile - ClearCLBuffer instance holding the grid tile image on GPU
+	 * @param imp - the destination ImagePlus which should have the same dimensions as the image the tile was derived from. 
+	 * @param tileX - tile identifier in x direction (0....n)
+	 * @param tileY - tile identifier in y direction (0....n)
+	 * @param tileZ - tile (stack-block) identifier in z direction (0....n)
+	 * @param percentageOverlap - tile overlap in percent (0 - 100)
+	 * @param fusionMode - the {@link ij.process.Blitter} interface can be used to specify the fusionMode input such as <i>Blitter.COPY</i>
 	 */
 	public static void pullGridTileToImage(CLIJ2 clij2, ClearCLBuffer gridTile, ImagePlus imp, Integer tileCountX, Integer tileCountY, Integer tileCountZ, Integer tileX, Integer tileY, Integer tileZ, Float percentageOverlap, Integer fusionMode) {
 		
@@ -123,22 +122,30 @@ public class PullGridTileToImage  extends AbstractCLIJ2Plugin implements CLIJMac
 			
 			int xLoc = tileX * baseTileWidth - tileX * x_overlap;
 			int yLoc = tileY * baseTileHeight - tileY * y_overlap;
+			int zLoc = tileZ * baseTileDepth - tileZ * z_overlap + slice;
 			
-			destinationStack.getProcessor(slice).copyBits(gridTileImagePlus.getStack().getProcessor(slice), xLoc, yLoc, fusionMode);
+			System.out.println("xLoc = " + xLoc);
+			System.out.println("yLoc = " + yLoc);
+			System.out.println("zLoc = " + zLoc);
+			
+			destinationStack.getProcessor(zLoc).copyBits(gridTileImagePlus.getStack().getProcessor(slice), xLoc, yLoc, fusionMode);
 		}
 		
 		imp.resetDisplayRange();
 		
-//		System.out.println("Target image = " + imp);
-//		System.out.println("tileWidth = " + tileWidth);
-//		System.out.println("tileHeight = " + tileHeight);
-//		System.out.println("tileDepth = " + tileDepth);
-//		System.out.println("x_overlap = " + x_overlap);
-//		System.out.println("y_overlap = " + y_overlap);
-//		System.out.println("z_overlap = " + z_overlap);
-//		System.out.println("effective x_overlap = " + 100 / tileWidth * x_overlap);
-//		System.out.println("effective y_overlap = " + 100 / tileHeight * y_overlap);
-//		System.out.println("effective z_overlap = " + 100 / tileDepth * z_overlap);
+		System.out.println("Target image = " + imp);
+		System.out.println("baseTileWidth = " + baseTileWidth);
+		System.out.println("baseTileHeight = " + baseTileHeight);
+		System.out.println("baseTileDepth = " + baseTileDepth);
+		System.out.println("tileWidth = " + tileWidth);
+		System.out.println("tileHeight = " + tileHeight);
+		System.out.println("tileDepth = " + tileDepth);
+		System.out.println("x_overlap = " + x_overlap);
+		System.out.println("y_overlap = " + y_overlap);
+		System.out.println("z_overlap = " + z_overlap);
+		System.out.println("effective x_overlap = " + 100 / tileWidth * x_overlap);
+		System.out.println("effective y_overlap = " + 100 / tileHeight * y_overlap);
+		System.out.println("effective z_overlap = " + 100 / tileDepth * z_overlap);
 	}
 	
 	
@@ -148,7 +155,7 @@ public class PullGridTileToImage  extends AbstractCLIJ2Plugin implements CLIJMac
 		if (tilePositionID == gridTileCount-1) {
 			tileSize = (int) Math.floor(imageSize - (Math.floor(tileSize * nonOverlapFactor) * (gridTileCount - 1)));
 		}
-		System.out.println("tileSize = " + tileSize);
+		//System.out.println("tileSize = " + tileSize);
 		return tileSize;
 	}
 	
@@ -196,48 +203,53 @@ public class PullGridTileToImage  extends AbstractCLIJ2Plugin implements CLIJMac
 			
 			CLIJ2 clij2 = CLIJ2.getInstance();
 			clij2.clear();
-
+			
 			IJ.run("Particles");
+			//IJ.open("path/to/image.file");
 			ImagePlus input_image = WindowManager.getCurrentImage();
 			
 			IJ.newImage("TargetImage", "32-bit black", input_image.getWidth(), input_image.getHeight(), input_image.getNSlices());
 			ImagePlus target_image = WindowManager.getCurrentImage();
 			
 			
-			int grid = 4;
+			int x_grid = 4;
+			int y_grid = 2;
+			int z_grid = 1;
 			float overlapPercentage = 40f;
-			int fusionMethod = Blitter.MAX;
-			
-			for (int y = 0; y < grid; y++) {
-				for (int x = 0; x < grid; x++) {
-					ClearCLBuffer currentTile = PushGridTile.pushGridTile(clij2, input_image, grid, grid, 1, x, y, 0, overlapPercentage);
-					ClearCLBuffer ccl = clij2.create(currentTile.getDimensions(), NativeTypeEnum.Float);
+			int fusionMethod = Blitter.COPY_ZERO_TRANSPARENT;
+			for (int z = 0; z < z_grid; z++) {
+				for (int y = 0; y < y_grid; y++) {
+					for (int x = 0; x < x_grid; x++) {
 					
-					ConnectedComponentsLabelingDiamond.connectedComponentsLabelingDiamond(clij2, currentTile, ccl);
-					currentTile.close();
-					
-					ClearCLBuffer voronoi = clij2.create(ccl);
-					ExtendLabelingViaVoronoi.extendLabelingViaVoronoi(clij2, ccl, voronoi);
-					ccl.close();
-					
-					ClearCLBuffer no_edges = clij2.create(voronoi);
-					ExcludeLabelsOnEdges.excludeLabelsOnEdges(clij2, voronoi, no_edges);
-					
-					ClearCLBuffer neighbors = clij2.create(voronoi);
-					AverageNeighborDistanceMap.averageNeighborDistanceMap(clij2, voronoi, neighbors);
-					voronoi.close();
-					
-					ClearCLBuffer masked_neighbors = clij2.create(neighbors);
-					Mask.mask(clij2, neighbors, no_edges, masked_neighbors);
-					neighbors.close();
-					no_edges.close();
-					
-					PullGridTileToImage.pullGridTileToImage(clij2, masked_neighbors, target_image, grid, grid, 1, x, y, 1, overlapPercentage, fusionMethod);
-					masked_neighbors.close();
-					
+						ClearCLBuffer currentTile = PushGridTile.pushGridTile(clij2, input_image, x_grid, y_grid, z_grid, x, y, z, overlapPercentage);
+						ClearCLBuffer ccl = clij2.create(currentTile.getDimensions(), NativeTypeEnum.Float);
+						
+						ConnectedComponentsLabelingDiamond.connectedComponentsLabelingDiamond(clij2, currentTile, ccl);
+						currentTile.close();
+						
+						ClearCLBuffer voronoi = clij2.create(ccl);
+						ExtendLabelingViaVoronoi.extendLabelingViaVoronoi(clij2, ccl, voronoi);
+						ccl.close();
+						
+						ClearCLBuffer no_edges = clij2.create(voronoi);
+						ExcludeLabelsOnEdges.excludeLabelsOnEdges(clij2, voronoi, no_edges);
+						
+						ClearCLBuffer neighbors = clij2.create(voronoi);
+						AverageNeighborDistanceMap.averageNeighborDistanceMap(clij2, voronoi, neighbors);
+						voronoi.close();
+						
+						ClearCLBuffer masked_neighbors = clij2.create(neighbors);
+						Mask.mask(clij2, neighbors, no_edges, masked_neighbors);
+						neighbors.close();
+						no_edges.close();
+						
+						PullGridTileToImage.pullGridTileToImage(clij2, masked_neighbors, target_image, x_grid, y_grid, z_grid, x, y, z, overlapPercentage, fusionMethod);
+						masked_neighbors.close();
+					}
 				}
 			}
 			
+			clij2.clear();
 			clij2.close();
 			target_image.show();
 			
