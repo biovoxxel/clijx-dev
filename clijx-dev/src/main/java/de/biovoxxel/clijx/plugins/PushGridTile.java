@@ -132,19 +132,19 @@ public class PushGridTile extends AbstractCLIJ2Plugin implements CLIJMacroPlugin
 		
 		ClearCLBuffer buffer = clij2.push(tileImagePlus);
 
-		System.out.println("---> Processing tile = " + tileX + " / " + tileY + " / " + tileZ);
-		System.out.println("Working on image = " + imp);
-		System.out.println("tileWidth * overlapFactor = " + baseTileWidth * overlapFactor);
-		System.out.println("x_overlap = " + x_overlap);
-		System.out.println("tileHeight * overlapFactor = " + baseTileHeight * overlapFactor);
-		System.out.println("y_overlap = " + y_overlap);
-		System.out.println("tileDepth * overlapFactor = " + baseTileDepth * overlapFactor);
-		System.out.println("z_overlap = " + z_overlap);
-		System.out.println("xLoc = " + xLoc);
-		System.out.println("yLoc = " + yLoc);
-		System.out.println("zLoc = " + zLoc);
-		System.out.println("Pushing " + tileImagePlus + " to GPU");
-		System.out.println(buffer);
+//		System.out.println("---> Processing tile = " + tileX + " / " + tileY + " / " + tileZ);
+//		System.out.println("Working on image = " + imp);
+//		System.out.println("tileWidth * overlapFactor = " + baseTileWidth * overlapFactor);
+//		System.out.println("x_overlap = " + x_overlap);
+//		System.out.println("tileHeight * overlapFactor = " + baseTileHeight * overlapFactor);
+//		System.out.println("y_overlap = " + y_overlap);
+//		System.out.println("tileDepth * overlapFactor = " + baseTileDepth * overlapFactor);
+//		System.out.println("z_overlap = " + z_overlap);
+//		System.out.println("xLoc = " + xLoc);
+//		System.out.println("yLoc = " + yLoc);
+//		System.out.println("zLoc = " + zLoc);
+//		System.out.println("Pushing " + tileImagePlus + " to GPU");
+//		System.out.println(buffer);
 		
 		return buffer;
 	}

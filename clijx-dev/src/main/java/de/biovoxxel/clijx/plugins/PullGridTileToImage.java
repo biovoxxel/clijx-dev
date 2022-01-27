@@ -129,16 +129,16 @@ public class PullGridTileToImage  extends AbstractCLIJ2Plugin implements CLIJMac
 		
 		imp.resetDisplayRange();
 		
-		System.out.println("Target image = " + imp);
-		System.out.println("tileWidth = " + tileWidth);
-		System.out.println("tileHeight = " + tileHeight);
-		System.out.println("tileDepth = " + tileDepth);
-		System.out.println("x_overlap = " + x_overlap);
-		System.out.println("y_overlap = " + y_overlap);
-		System.out.println("z_overlap = " + z_overlap);
-		System.out.println("effective x_overlap = " + 100 / tileWidth * x_overlap);
-		System.out.println("effective y_overlap = " + 100 / tileHeight * y_overlap);
-		System.out.println("effective z_overlap = " + 100 / tileDepth * z_overlap);
+//		System.out.println("Target image = " + imp);
+//		System.out.println("tileWidth = " + tileWidth);
+//		System.out.println("tileHeight = " + tileHeight);
+//		System.out.println("tileDepth = " + tileDepth);
+//		System.out.println("x_overlap = " + x_overlap);
+//		System.out.println("y_overlap = " + y_overlap);
+//		System.out.println("z_overlap = " + z_overlap);
+//		System.out.println("effective x_overlap = " + 100 / tileWidth * x_overlap);
+//		System.out.println("effective y_overlap = " + 100 / tileHeight * y_overlap);
+//		System.out.println("effective z_overlap = " + 100 / tileDepth * z_overlap);
 	}
 	
 	
@@ -183,7 +183,7 @@ public class PullGridTileToImage  extends AbstractCLIJ2Plugin implements CLIJMac
 
 
 	public String getParameterHelpText() {	
-		return "Image gridTile, String destination_image_name, Number tileX, Number tileY, Number tileZ, Number percentageOverlap, Number fusionMode";
+		return "Image gridTile, String destination_image_name, Number tileCountX, Number tileCountY, Number tileCountZ, Number tileX, Number tileY, Number tileZ, Number percentageOverlap, Number fusionMode";
 	}
 	
 	public String getAuthorName() {
