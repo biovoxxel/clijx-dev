@@ -101,6 +101,8 @@ public class PullGridTileToImage  extends AbstractCLIJ2Plugin implements CLIJMac
 			tileDepth = (int) tileDimensions[2];
 		} else {
 			tileDepth = 1;
+			tileCountZ = 1;
+			tileZ = 0;
 		}
 		
 		

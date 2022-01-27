@@ -106,6 +106,10 @@ public class PushGridTile extends AbstractCLIJ2Plugin implements CLIJMacroPlugin
 		if (tileCountZ > imageDepth) {
 			tileCountZ = imageDepth;
 		}
+		
+		if (imageDepth == 1) {
+			tileZ = 0;
+		}
 
 		int tileWidth = getTileSize(tileCountX, tileX, nonOverlapFactor, imageWidth);
 		int tileHeight = getTileSize(tileCountY, tileY, nonOverlapFactor, imageHeight);
