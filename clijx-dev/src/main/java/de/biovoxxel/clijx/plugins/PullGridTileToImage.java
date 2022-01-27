@@ -143,9 +143,9 @@ public class PullGridTileToImage  extends AbstractCLIJ2Plugin implements CLIJMac
 		System.out.println("x_overlap = " + x_overlap);
 		System.out.println("y_overlap = " + y_overlap);
 		System.out.println("z_overlap = " + z_overlap);
-		System.out.println("effective x_overlap = " + 100 / tileWidth * x_overlap);
-		System.out.println("effective y_overlap = " + 100 / tileHeight * y_overlap);
-		System.out.println("effective z_overlap = " + 100 / tileDepth * z_overlap);
+		System.out.println("effective x_overlap = " + (100f / tileWidth * x_overlap));
+		System.out.println("effective y_overlap = " + (100f / tileHeight * y_overlap));
+		System.out.println("effective z_overlap = " + (100f / tileDepth * z_overlap));
 	}
 	
 	
@@ -214,7 +214,7 @@ public class PullGridTileToImage  extends AbstractCLIJ2Plugin implements CLIJMac
 			
 			int x_grid = 4;
 			int y_grid = 2;
-			int z_grid = 1;
+			int z_grid = 2;
 			float overlapPercentage = 40f;
 			int fusionMethod = Blitter.COPY_ZERO_TRANSPARENT;
 			for (int z = 0; z < z_grid; z++) {
